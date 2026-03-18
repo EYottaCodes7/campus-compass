@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Campus Compass</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=IBM+Plex+Sans:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="hero">
+        <nav class="topbar">
+          <div class="brand">
+            <span class="brand-mark">CC</span>
+            <div>
+              <p>Campus Compass</p>
+              <span>Student navigation and spot finder</span>
+            </div>
+          </div>
+          <div class="topbar-actions">
+            <button id="openBestMatch" class="ghost-button" type="button">Show Best Match</button>
+            <button id="showFavoritesOnly" class="outline-button" type="button">Favorites Only</button>
+          </div>
+        </nav>
+
+        <div class="hero-grid">
+          <section class="hero-copy">
+            <p class="eyebrow">University navigation app</p>
+            <h1>Find the best place on campus for what you need right now.</h1>
+            <p class="hero-text">
+              Search stores, restaurants, lost and found, access-controlled buildings, study spaces,
+              and support offices with a clean navigation board designed for students.
+            </p>
+            <div id="quickCategoryBar" class="quick-category-bar"></div>
+          </section>
+
+          <aside class="hero-card">
+            <div class="section-heading compact-heading">
+              <div>
+                <p class="section-kicker">Campus pulse</p>
+                <h2>Live board</h2>
+              </div>
+            </div>
+            <div id="quickStats" class="quick-stats"></div>
+          </aside>
+        </div>
+      </header>
+
+      <main class="dashboard">
+        <section class="panel planner-panel">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Trip planner</p>
+              <h2>Set your route preferences</h2>
+            </div>
+            <div class="planner-summary" id="plannerSummary"></div>
+          </div>
+
+          <div class="planner-grid">
+            <label>
+              <span>Starting point</span>
+              <select id="startFilter"></select>
+            </label>
+            <label>
+              <span>What are you looking for?</span>
+              <select id="categoryFilter"></select>
+            </label>
+            <label>
+              <span>Budget</span>
+              <select id="budgetFilter"></select>
+            </label>
+            <label>
+              <span>Walking preference</span>
+              <select id="distanceFilter"></select>
+            </label>
+            <label>
+              <span>Access need</span>
+              <select id="accessFilter"></select>
+            </label>
+            <label>
+              <span>Open status</span>
+              <select id="openFilter"></select>
+            </label>
+            <label>
+              <span>Search by place or service</span>
+              <input id="searchInput" type="text" placeholder="Try cafe, charger, lost ID..." />
+            </label>
+            <label class="toggle-field">
+              <span>Accessibility friendly only</span>
+              <button id="accessibilityToggle" class="toggle-button" type="button" aria-pressed="false">
+                Off
+              </button>
+            </label>
+          </div>
+
+          <div class="toolbar">
+            <button id="resetFilters" class="text-button" type="button">Reset filters</button>
+            <div id="activeFilters" class="active-filters"></div>
+          </div>
+        </section>
+
+        <section class="content-grid">
+          <section class="left-column">
+            <section class="panel map-panel">
+              <div class="section-heading">
+                <div>
+                  <p class="section-kicker">Navigation board</p>
+                  <h2>Campus map overview</h2>
+                </div>
+                <div class="legend">
+                  <span><i class="legend-dot legend-dot-teal"></i> Selected</span>
+                  <span><i class="legend-dot legend-dot-gold"></i> Open now</span>
+                  <span><i class="legend-dot legend-dot-rose"></i> Restricted</span>
+                </div>
+              </div>
+
+              <div class="map-shell">
+                <div class="map-grid">
+                  <div class="map-zone zone-gate">Main Gate</div>
+                  <div class="map-zone zone-admin">Admin Block</div>
+                  <div class="map-zone zone-library">Library</div>
+                  <div class="map-zone zone-arts">Arts Court</div>
+                  <div class="map-zone zone-science">Science Block</div>
+                  <div class="map-zone zone-hostels">Hostels</div>
+                  <div class="map-zone zone-engineering">Engineering</div>
+                  <div class="map-zone zone-center">Student Center</div>
+                </div>
+                <div id="mapPins" class="map-pins"></div>
+              </div>
+            </section>
+
+            <section class="panel results-panel">
+              <div class="section-heading">
+                <div>
+                  <p class="section-kicker">Campus spots</p>
+                  <h2 id="resultsTitle">Recommended places</h2>
+                </div>
+                <div id="resultsCount" class="results-count"></div>
+              </div>
+              <div id="spotList" class="spot-list"></div>
+            </section>
+          </section>
+
+          <aside class="right-column">
+            <section class="panel detail-panel">
+              <div class="section-heading">
+                <div>
+                  <p class="section-kicker">Information board</p>
+                  <h2>Spot details</h2>
+                </div>
+              </div>
+              <div id="spotDetail" class="spot-detail"></div>
+            </section>
+
+            <section class="panel route-panel">
+              <div class="section-heading">
+                <div>
+                  <p class="section-kicker">Route guide</p>
+                  <h2>How to get there</h2>
+                </div>
+              </div>
+              <div id="routePanel" class="route-panel-content"></div>
+            </section>
+
+            <section class="panel notice-panel">
+              <div class="section-heading">
+                <div>
+                  <p class="section-kicker">Student alerts</p>
+                  <h2>Helpful notices</h2>
+                </div>
+              </div>
+              <div id="noticeBoard" class="notice-board"></div>
+            </section>
+          </aside>
+        </section>
+      </main>
+    </div>
+
+    <template id="spotCardTemplate">
+      <article class="spot-card">
+        <div class="spot-card-top">
+          <div>
+            <p class="spot-category"></p>
+            <h3 class="spot-name"></h3>
+          </div>
+          <div class="spot-actions">
+            <button class="favorite-button" type="button" aria-label="Toggle favorite">♡</button>
+            <div class="rating-badge"></div>
+          </div>
+        </div>
+        <p class="spot-summary"></p>
+        <div class="chip-row"></div>
+        <div class="card-footer">
+          <div class="meta-group">
+            <span class="spot-distance"></span>
+            <span class="spot-access"></span>
+          </div>
+          <button class="primary-button" type="button">View route</button>
+        </div>
+      </article>
+    </template>
+
+    <template id="mapPinTemplate">
+      <button class="map-pin" type="button">
+        <span class="map-pin-dot"></span>
+        <span class="map-pin-label"></span>
+      </button>
+    </template>
+
+    <script src="./app.js"></script>
+  </body>
+</html>

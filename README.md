@@ -26,3 +26,5 @@ npm run dev
 - `index.html` - app layout and UI sections
 - `styles.css` - styling, responsive layout, and visual theme
 - `app.js` - campus data, filters, favorites, route planner, and rendering logic
+## Author
+Eyuel Mekonnen
